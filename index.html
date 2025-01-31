@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>For Cherry, My Valentine</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(to bottom, #ffe6f2, #ffcce6);
+            overflow: hidden;
+            font-family: 'Playfair Display', serif;
+            position: relative;
+        }
+
+        .poem {
+            text-align: center;
+            color: #ff4d94;
+            font-size: 2.2rem;
+            line-height: 1.8;
+            text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.8);
+            margin-bottom: 3rem;
+            font-style: italic;
+            font-weight: 700;
+            animation: floatPoem 8s ease-in-out infinite;
+            z-index: 2;
+            position: relative;
+        }
+
+        @keyframes floatPoem {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        .buttons {
+            display: flex;
+            gap: 3rem;
+            justify-content: center;
+            z-index: 2;
+            margin-top: 2rem;
+        }
+
+        .heart-button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 120px;
+            height: 120px;
+            position: relative;
+        }
+
+        .heart-button:hover {
+            transform: scale(1.1);
+        }
+
+        .heart-shape {
+            fill: #ff4d94;
+            transition: all 0.3s ease;
+        }
+
+        .heart-button:hover .heart-shape {
+            fill: #ff1a75;
+        }
+
+        .button-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 1.2rem;
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            pointer-events: none;
+        }
+
+        .floating-heart {
+            position: absolute;
+            animation: float 20s linear infinite;
+            opacity: 0.4;
+            pointer-events: none;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) translateX(-50%) rotate(0deg);
+            }
+            100% {
+                transform: translateY(-100px) translateX(50%) rotate(360deg);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="poem">
+        Roses are red, violets are blue,<br>
+        I'm so lucky to have you…<br>
+        Will you be my Valentine too?<br>
+         Cherry 
+    </div>
+
+    <div class="buttons">
+        <button class="heart-button" onclick="respond('yes')">
+            <svg viewBox="0 0 100 100" class="heart-shape">
+                <path d="M50 90C50 90 87 62 87 35C87 19 74 10 62 10C50 10 50 19 50 19C50 19 50 10 38 10C26 10 13 19 13 35C13 62 50 90 50 90Z"/>
+            </svg>
+            <span class="button-text">Yes</span>
+        </button>
+        <button class="heart-button" onclick="respond('no')">
+            <svg viewBox="0 0 100 100" class="heart-shape" style="fill: #ff8aa6;">
+                <path d="M50 90C50 90 87 62 87 35C87 19 74 10 62 10C50 10 50 19 50 19C50 19 50 10 38 10C26 10 13 19 13 35C13 62 50 90 50 90Z"/>
+            </svg>
+            <span class="button-text">No</span>
+        </button>
+    </div>
+
+    <script>
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('floating-heart');
+            heart.innerHTML = `
+                <svg width="40" height="40" viewBox="0 0 100 100">
+                    <path d="M50 90C50 90 87 62 87 35C87 19 74 10 62 10C50 10 50 19 50 19C50 19 50 10 38 10C26 10 13 19 13 35C13 62 50 90 50 90Z" fill="white"/>
+                </svg>
+            `;
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDelay = Math.random() * 10 + 's';
+            document.body.appendChild(heart);
+            
+            heart.addEventListener('animationend', () => {
+                heart.remove();
+            });
+        }
+
+        setInterval(createHeart, 2000);
+
+        function respond(answer) {
+            if (answer === 'yes') {
+                for (let i = 0; i < 20; i++) {
+                    setTimeout(createHeart, i * 100);
+                }
+                // Redirect to the lyrics page after a short delay
+                setTimeout(() => {
+                    window.location.href = 'lyrics.html';
+                }, 1500);
+            }
+        }
+
+        // Initial hearts
+        for (let i = 0; i < 10; i++) {
+            setTimeout(createHeart, i * 500);
+        }
+    </script>
+</body>
+</html>
